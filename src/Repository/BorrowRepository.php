@@ -2,46 +2,68 @@
 
 declare(strict_types=1);
 
-
 namespace App\Library\Repository;
+
+use PDO;
 
 class BorrowRepository
 {
-    private $conn;
+    private PDO $db;
 
-    public function __construct($conn)
+    public function __construct()
     {
-        $this->conn = $conn;
+        $this->db = DatabaseConnection::getInstance()->getConnection();
     }
 
-    function borrowBook($sid, $bid, $days)
+
+    public function borrowBook(int $studentId, int $bookId, int $days): bool
     {
-        $due = date('Y-m-d', strtotime('+' . $days . ' days'));
-        $sql = "INSERT INTO borrow_records(student_id,book_id,borrow_date,due_date,status) VALUES(" . $sid . "," . $bid . ",'" . date('Y-m-d') . "','" . $due . "','borrowed')";
-        $this->conn->query($sql);
-        return true;
+        $dueDate = date('Y-m-d', strtotime('+' . $days . ' days'));
+        $borrowDate = date('Y-m-d');
+        
+        $sql = "INSERT INTO borrow_records (student_id, book_id, borrow_date, due_date, status) 
+                VALUES (?, ?, ?, ?, 'borrowed')";
+                
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([$studentId, $bookId, $borrowDate, $dueDate]);
     }
 
-    function getRecordById($rid)
+
+    public function getRecordById(int $recordId): ?array
     {
-        $sql = "SELECT * FROM borrow_records WHERE record_id=" . $rid;
-        return $this->conn->query($sql)->fetch_assoc();
+        $sql = "SELECT * FROM borrow_records WHERE record_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$recordId]);
+        
+        $result = $stmt->fetch();
+        return $result ?: null;
     }
 
-    function updateReturnStatus($rid, $fine)
+
+    public function updateReturnStatus(int $recordId, float $fineAmount): bool
     {
-        $sql2 = "UPDATE borrow_records SET return_date='" . date('Y-m-d') . "', fine_amount=" . $fine . ", status='returned' WHERE record_id=" . $rid;
-        $this->conn->query($sql2);
+        $returnDate = date('Y-m-d');
+        $sql = "UPDATE borrow_records 
+                SET return_date = ?, fine_amount = ?, status = 'returned' 
+                WHERE record_id = ?";
+                
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([$returnDate, $fineAmount, $recordId]);
     }
 
-    function getOverdueBooks()
+
+    public function getOverdueBooks(): array
     {
-        $sql = "SELECT br.*, b.title, s.name FROM borrow_records br JOIN books b ON br.book_id=b.book_id JOIN students s ON br.student_id=s.student_id WHERE br.due_date<'" . date('Y-m-d') . "' AND br.status='borrowed'";
-        $result = $this->conn->query($sql);
-        $list = array();
-        while ($row = $result->fetch_assoc()) {
-            $list[] = $row;
-        }
-        return $list;
+        $today = date('Y-m-d');
+        $sql = "SELECT br.*, b.title, s.name 
+                FROM borrow_records br 
+                JOIN books b ON br.book_id = b.book_id 
+                JOIN students s ON br.student_id = s.student_id 
+                WHERE br.due_date < ? AND br.status = 'borrowed'";
+                
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$today]);
+        
+        return $stmt->fetchAll();
     }
 }

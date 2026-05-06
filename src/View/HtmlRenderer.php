@@ -6,16 +6,24 @@ namespace App\Library\View;
 
 class HtmlRenderer
 {
-    function listBooks($result)
+    public function listBooks(array $books): void
     {
         echo "<table border='1'><tr><th>ID</th><th>Title</th><th>Author</th><th>Year</th><th>Genre</th></tr>";
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr><td>" . $row['book_id'] . "</td><td>" . $row['title'] . "</td><td>" . $row['author'] . "</td><td>" . $row['year'] . "</td><td>" . $row['genre'] . "</td></tr>";
+        
+        foreach ($books as $row) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars((string)$row['book_id']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['title']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['author']) . "</td>";
+            echo "<td>" . htmlspecialchars((string)$row['year']) . "</td>";
+            echo "<td>" . htmlspecialchars($row['genre']) . "</td>";
+            echo "</tr>";
         }
+        
         echo "</table>";
     }
 
-    function generateReport($data)
+    public function generateReport(array $data): void
     {
         echo "<h2>Library Report</h2>";
         echo "<p>Total Books: " . $data['totalBooks'] . "</p>";

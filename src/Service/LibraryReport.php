@@ -4,22 +4,25 @@ declare(strict_types=1);
 
 namespace App\Library\Service;
 
+use App\Library\Repository\DatabaseConnection;
+use PDO;
+
 class LibraryReport
 {
-    private $conn;
+    private PDO $db;
 
-    public function __construct($conn)
+    public function __construct()
     {
-        $this->conn = $conn;
+        $this->db = DatabaseConnection::getInstance()->getConnection();
     }
 
-    function getReportData()
+    public function getReportData(): array
     {
         return [
-            'totalBooks' => $this->conn->query("SELECT COUNT(*) as c FROM books")->fetch_assoc()['c'],
-            'totalBorrowed' => $this->conn->query("SELECT COUNT(*) as c FROM borrow_records WHERE status='borrowed'")->fetch_assoc()['c'],
-            'totalReturned' => $this->conn->query("SELECT COUNT(*) as c FROM borrow_records WHERE status='returned'")->fetch_assoc()['c'],
-            'totalFines' => $this->conn->query("SELECT SUM(fine_amount) as s FROM borrow_records WHERE fine_amount>0")->fetch_assoc()['s']
+            'totalBooks' => $this->db->query("SELECT COUNT(*) FROM books")->fetchColumn(),
+            'totalBorrowed' => $this->db->query("SELECT COUNT(*) FROM borrow_records WHERE status = 'borrowed'")->fetchColumn(),
+            'totalReturned' => $this->db->query("SELECT COUNT(*) FROM borrow_records WHERE status = 'returned'")->fetchColumn(),
+            'totalFines' => $this->db->query("SELECT SUM(fine_amount) FROM borrow_records WHERE fine_amount > 0")->fetchColumn() ?: 0
         ];
     }
 }
