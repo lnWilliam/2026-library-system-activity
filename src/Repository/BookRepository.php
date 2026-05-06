@@ -4,43 +4,52 @@ declare(strict_types=1);
 
 namespace App\Library\Repository;
 
+use PDO;
+
 class BookRepository
 {
-    private $conn;
+    private PDO $db;
 
-    public function __construct($conn)
+    public function __construct()
     {
-        $this->conn = $conn;
+        $this->db = DatabaseConnection::getInstance()->getConnection();
     }
 
-    function addBook($t, $a, $y, $g)
+    public function addBook(string $title, string $author, int $year, string $genre): int
     {
-        $sql = "INSERT INTO books(title,author,year,genre) VALUES('" . $t . "','" . $a . "'," . $y . ",'" . $g . "')";
-        $this->conn->query($sql);
-        return $this->conn->insert_id;
+        $sql = "INSERT INTO books (title, author, year, genre) VALUES (?, ?, ?, ?)";
+        $statement = $this->db->prepare($sql);
+        $statement->execute([$title, $author, $year, $genre]);
+
+        return (int) $this->db->lastInsertId();
     }
 
-    function getBook($id)
+    public function findById(int $bookId): ?array
     {
-        $sql = "SELECT * FROM books WHERE book_id=" . $id;
-        $result = $this->conn->query($sql);
-        return $result->fetch_assoc();
+        $sql = "SELECT * FROM books WHERE book_id = ?";
+        $statement = $this->db->prepare($sql);
+        $statement->execute([$bookId]);
+
+        $record = $statement->fetch();
+        return $record ?: null;
     }
 
-    function searchBooks($kw)
+    public function searchBooks(string $keyword): array
     {
-        $sql = "SELECT * FROM books WHERE title LIKE '%" . $kw . "%' OR author LIKE '%" . $kw . "%'";
-        $result = $this->conn->query($sql);
-        $books = array();
-        while ($row = $result->fetch_assoc()) {
-            $books[] = $row;
-        }
-        return $books;
+        $sql = "SELECT * FROM books WHERE title LIKE ? OR author LIKE ?";
+        $statement = $this->db->prepare($sql);
+
+        $searchTerm = "%$keyword%";
+        $statement->execute([$searchTerm, $searchTerm]);
+
+        return $statement->fetchAll();
     }
 
-    function listBooksRaw()
+    public function findAll(): array
     {
         $sql = "SELECT * FROM books";
-        return $this->conn->query($sql);
+        $statement = $this->db->query($sql);
+
+        return $statement->fetchAll();
     }
 }

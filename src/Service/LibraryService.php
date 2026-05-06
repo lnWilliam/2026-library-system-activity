@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace App\Library\Service;
 
+use DateTime;
+
 class LibraryService
 {
-    public $fine_rate = 5;
+    private float $dailyFineRate = 5.0;
 
-    function calculateFine($due_date)
+    public function calculateOverdueFine(DateTime $dueDate): float
     {
-        $due = strtotime($due_date);
-        $today = strtotime(date('Y-m-d'));
-        $diff = ($today - $due) / (60 * 60 * 24);
-        $fine = 0;
-        if ($diff > 0) {
-            $fine = $diff * $this->fine_rate;
-        }
-        return $fine;
+        $today = new DateTime();
+        $interval = $today->diff($dueDate);
+
+
+        $daysOverdue = (int) $interval->format('%r%a');
+
+
+        return $today > $dueDate ? abs($daysOverdue) * $this->dailyFineRate : 0.0;
     }
 }
