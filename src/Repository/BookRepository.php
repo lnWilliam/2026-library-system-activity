@@ -1,93 +1,43 @@
 <?php
-
 declare(strict_types=1);
 
-namespace App\Library\Repository;
+namespace App\Repository;
 
+use App\Config\DatabaseConfig;
+use App\Entity\Book;
 use PDO;
 
 class BookRepository
 {
-    private PDO $databaseConnection;
+    private PDO $connection;
 
-    public function __construct()
+    public function __construct(DatabaseConfig $database)
     {
-        $this->databaseConnection =
-            DatabaseConnection::getInstance()
-                ->getConnection();
+        $this->connection = $database->getConnection();
     }
 
-    public function addBook(
-        string $title,
-        string $author,
-        int $year,
-        string $genre
-    ): int {
-        $sql = 'INSERT INTO books (
-                    title,
-                    author,
-                    year,
-                    genre
-                )
-                VALUES (?, ?, ?, ?)';
+    public function addBook(Book $book): int
+    {
+        $sql = "INSERT INTO books(title, author, year, genre) 
+                VALUES(:title, :author, :year, :genre)";
 
-        $statement =
-            $this->databaseConnection->prepare($sql);
-
-        $statement->execute([
-            $title,
-            $author,
-            $year,
-            $genre,
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([
+            'title' => $book->getTitle(),
+            
+            'author' => $book->getAuthor(),
+            'year' => $book->getYear(),
+            'genre' => $book->getGenre()
         ]);
 
-        return (int) 
-            $this->databaseConnection->lastInsertId();
+        return (int) $this->connection->lastInsertId();
     }
 
-    public function findById(
-        int $bookId
-    ): ?array {
-        $sql = 'SELECT * FROM books
-                WHERE book_id = ?';
-
-        $statement =
-            $this->databaseConnection->prepare($sql);
-
-        $statement->execute([$bookId]);
-
-        $book = $statement->fetch();
-
-        return $book ?: null;
-    }
-
-    public function findAll(): array
+    public function listBooks(): array
     {
-        $sql = 'SELECT * FROM books';
-
-        $statement =
-            $this->databaseConnection->query($sql);
-
-        return $statement->fetchAll();
-    }
-
-    public function searchBooks(
-        string $keyword
-    ): array {
-        $sql = 'SELECT * FROM books
-                WHERE title LIKE ?
-                OR author LIKE ?';
-
-        $searchKeyword = '%' . $keyword . '%';
-
-        $statement =
-            $this->databaseConnection->prepare($sql);
-
-        $statement->execute([
-            $searchKeyword,
-            $searchKeyword,
-        ]);
-
-        return $statement->fetchAll();
+        $sql = "SELECT * FROM books ORDER BY book_id DESC";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
