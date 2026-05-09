@@ -7,7 +7,7 @@ namespace App\Config;
 /**
  * Library Configuration
  *
- * @author Your Name
+ * @author William Joseph Imperial
  * @since 2026-05-09
  */
 class LibraryConfig

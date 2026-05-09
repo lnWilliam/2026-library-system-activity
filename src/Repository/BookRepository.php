@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Handles all database operations for books (CRUD).
  * Uses prepared statements to prevent SQL injection.
  *
- * @author Your Full Name
+ * @author William Joseph Imperial
  * @since 2026-05-09
  */
 
