@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Library Report View
+ *
+ * Displays library statistics and list of overdue books.
+ *
+ * @author William Joseph Imperial
+ * @since 2026-05-09
+ */
+
 declare(strict_types=1);
 require_once __DIR__ . '/../../../../vendor/autoload.php';
 

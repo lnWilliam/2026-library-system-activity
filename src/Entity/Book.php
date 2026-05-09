@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Book Entity
+ *
+ * Represents a book in the library system.
+ * Includes validation for publication year (1000 to current year).
+ *
+ * @author William Joseph Imperial
+ * @since 2026-05-09
+ */
+
 declare(strict_types=1);
 
 namespace App\Entity;

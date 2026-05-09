@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * LibraryReport
+ *
+ * Generates statistical reports (total books, borrowed, fines, etc.).
+ *
+ * @author William Joseph Imperial
+ * @since 2026-05-09
+ */
+
 declare(strict_types=1);
 
 namespace App\Service;

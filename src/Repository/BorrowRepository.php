@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * BorrowRepository
+ *
+ * Manages borrowing and returning of books from the database.
+ *
+ * @author William Joseph Imperial
+ * @since 2026-05-09
+ */
+
 declare(strict_types=1);
 
 namespace App\Repository;
