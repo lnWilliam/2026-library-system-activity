@@ -7,6 +7,12 @@ use App\Config\DatabaseConfig;
 use App\Entity\Book;
 use PDO;
 
+/**
+ * Book Repository
+ *
+ * @author Your Name
+ * @since 2026-05-09
+ */
 class BookRepository
 {
     private PDO $connection;
@@ -23,11 +29,10 @@ class BookRepository
 
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([
-            'title' => $book->getTitle(),
-            
+            'title'  => $book->getTitle(),
             'author' => $book->getAuthor(),
-            'year' => $book->getYear(),
-            'genre' => $book->getGenre()
+            'year'   => $book->getYear(),
+            'genre'  => $book->getGenre()
         ]);
 
         return (int) $this->connection->lastInsertId();

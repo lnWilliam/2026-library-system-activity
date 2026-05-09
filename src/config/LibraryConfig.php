@@ -1,18 +1,19 @@
 <?php
-
 declare(strict_types=1);
 
-namespace App\Library\Config;
+namespace App\Config;
 
+/**
+ * Library Configuration
+ *
+ * @author Your Name
+ * @since 2026-05-09
+ */
 class LibraryConfig
 {
-    public const DAILY_FINE_RATE = 5.0;
-
-    public const DEFAULT_BORROW_DAYS = 14;
-
-    public const STATUS_BORROWED = 'borrowed';
-
     public const STATUS_RETURNED = 'returned';
-
+    public const STATUS_BORROWED = 'borrowed';
+    public const DEFAULT_BORROW_DAYS = 14;
+    public const DAILY_FINE_RATE = 5.00;
     public const MAX_BORROW_LIMIT = 3;
 }

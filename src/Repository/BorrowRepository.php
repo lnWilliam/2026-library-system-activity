@@ -7,6 +7,12 @@ use App\Config\DatabaseConfig;
 use App\Config\LibraryConfig;
 use PDO;
 
+/**
+ * Borrow Repository
+ *
+ * @author Your Name
+ * @since 2026-05-09
+ */
 class BorrowRepository
 {
     private PDO $connection;
