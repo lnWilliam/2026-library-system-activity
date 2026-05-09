@@ -1,10 +1,9 @@
 {
-    "name": "yourname/2026-library-system-activity",
-    "description": "Library Management System - OOP Refactor",
+    "name": "student/2026-library-system-activity",
+    "description": "final-activity",
     "autoload": {
         "psr-4": {
             "App\\": "src/"
         }
-    },
-    "require": {}
+    }
 }
