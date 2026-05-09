@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Library System Main Controller
+ *
+ * Main entry point of the application.
+ * Handles adding new books and navigation to other features.
+ * Uses session flash messages for user feedback.
+ *
+ * @author William Joseph Imperial
+ * @since 2026-05-09
+ */
+
 declare(strict_types=1);
 session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -43,11 +54,8 @@ if (isset($_POST['addbook'])) {
             $_SESSION['message'] = 'Book added successfully!';
             $_SESSION['messageType'] = 'success';
         }
-    } catch (ValidationException $e) {
-        $_SESSION['message'] = $e->getMessage();
-        $_SESSION['messageType'] = 'error';
-    } catch (\Exception $e) {
-        $_SESSION['message'] = 'An error occurred';
+    } catch (Exception $e) {
+        $_SESSION['message'] = 'Error: ' . $e->getMessage();
         $_SESSION['messageType'] = 'error';
     }
 
@@ -68,12 +76,12 @@ if (isset($_SESSION['message'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library System</title>
-
+    <title>2026 Library System</title>
     <style>
         body {
             font-family: Arial;
             text-align: center;
+            margin-top: 50px;
         }
 
         .success {
@@ -95,9 +103,8 @@ if (isset($_SESSION['message'])) {
         <p class="<?= $messageType ?>"><?= htmlspecialchars($message) ?></p>
     <?php endif; ?>
 
-
     <form method="POST">
-        <h3>Add Book</h3>
+        <h3>Add New Book</h3>
         Title: <input type="text" name="book_title" required><br><br>
         Author: <input type="text" name="book_author" required><br><br>
         Genre: <input type="text" name="book_genre" required><br><br>
@@ -105,7 +112,7 @@ if (isset($_SESSION['message'])) {
         <button type="submit" name="addbook">Add Book</button>
     </form>
 
-    <br>
+    <br><br>
     <form method="POST">
         <button type="submit" name="BookList">View Book List</button>
         <button type="submit" name="borrow_book">Borrow Book</button>

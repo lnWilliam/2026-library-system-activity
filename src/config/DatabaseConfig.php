@@ -7,7 +7,7 @@ declare(strict_types=1);
  * Manages PDO database connection with secure settings.
  * Uses singleton-like pattern through constructor.
  *
- * @author Your Full Name
+ * @author William Joseph Imperial
  * @since 2026-05-09
  */
 
@@ -17,12 +17,7 @@ use PDO;
 use PDOException;
 use App\Exception\DatabaseException;
 
-/**
- * Database Configuration
- *
- * @author Your Name
- * @since 2026-05-09
- */
+
 class DatabaseConfig
 {
     private PDO $connection;

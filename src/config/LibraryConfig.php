@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace App\Config;
 
-
+/**
+ * Library Configuration
+ *
+ * @author William Joseph Imperial
+ * @since 2026-05-09
+ */
 class LibraryConfig
 {
     public const STATUS_RETURNED = 'returned';

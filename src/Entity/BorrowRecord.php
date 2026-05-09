@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * BorrowRecord Entity
+ *
+ * Represents a record of a book being borrowed by a student.
+ *
+ * @author William Joseph Imperial
+ * @since 2026-05-09
+ */
+
 declare(strict_types=1);
 
 namespace App\Library\Entity;

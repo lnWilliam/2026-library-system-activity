@@ -1,12 +1,27 @@
 <?php
 
+/**
+ * Book Entity
+ *
+ * Represents a book in the library system.
+ * Includes validation for publication year (1000 to current year).
+ *
+ * @author William Joseph Imperial
+ * @since 2026-05-09
+ */
+
 declare(strict_types=1);
 
 namespace App\Entity;
 
 use App\Exception\ValidationException;
 
-
+/**
+ * Book Entity
+ *
+ * @author William Joseph
+ * @since 2026-05-09
+ */
 class Book
 {
     private ?int $bookId;
@@ -15,13 +30,8 @@ class Book
     private int $year;
     private string $genre;
 
-    public function __construct(
-        string $title,
-        string $author,
-        int $year,
-        string $genre,
-        ?int $bookId = null
-    ) {
+    public function __construct(string $title, string $author, int $year, string $genre, ?int $bookId = null)
+    {
         if ($year < 1000 || $year > (int)date('Y')) {
             throw new ValidationException("Invalid Publication Year: " . $year);
         }
