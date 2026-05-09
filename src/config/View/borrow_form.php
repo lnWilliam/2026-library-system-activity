@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Borrow Book Form View
+ *
+ * Form for borrowing a book (student ID, book ID, days).
+ *
+ * @author William Joseph Imperial
+ * @since 2026-05-09
+ */
+
 declare(strict_types=1);
 session_start();
 require_once __DIR__ . '/../../../../vendor/autoload.php';

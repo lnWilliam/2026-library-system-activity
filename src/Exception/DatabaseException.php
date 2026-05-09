@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * DatabaseException
+ *
+ * Custom exception for database-related errors.
+ *
+ * @author William Joseph Imperial
+ * @since 2026-05-09
+ */
+
 declare(strict_types=1);
 
 namespace App\Exception;

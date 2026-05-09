@@ -1,4 +1,16 @@
 <?php
+
+/**
+ * Library System Main Controller
+ *
+ * Main entry point of the application.
+ * Handles adding new books and navigation to other features.
+ * Uses session flash messages for user feedback.
+ *
+ * @author William Joseph Imperial
+ * @since 2026-05-09
+ */
+
 declare(strict_types=1);
 session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -60,16 +72,30 @@ if (isset($_SESSION['message'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026 Library System</title>
     <style>
-        body { font-family: Arial; text-align: center; margin-top: 50px; }
-        .success { color: green; font-weight: bold; }
-        .error { color: red; font-weight: bold; }
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
+
 <body>
     <h1>2026 Library System</h1>
 
@@ -93,4 +119,5 @@ if (isset($_SESSION['message'])) {
         <button type="submit" name="report_view">Library Report</button>
     </form>
 </body>
+
 </html>

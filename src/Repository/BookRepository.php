@@ -1,6 +1,5 @@
 <?php
 
-declare(strict_types=1);
 /**
  * BookRepository
  * 
@@ -10,6 +9,9 @@ declare(strict_types=1);
  * @author William Joseph Imperial
  * @since 2026-05-09
  */
+
+declare(strict_types=1);
+
 
 namespace App\Repository;
 

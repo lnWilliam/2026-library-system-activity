@@ -17,12 +17,7 @@ use PDO;
 use PDOException;
 use App\Exception\DatabaseException;
 
-/**
- * Database Configuration
- *
- * @author Your Name
- * @since 2026-05-09
- */
+
 class DatabaseConfig
 {
     private PDO $connection;
