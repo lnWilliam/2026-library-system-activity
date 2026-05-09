@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -15,22 +14,20 @@ $bookrepo = new BookRepository($database);
 $message = '';
 $messageType = '';
 
-if (isset($_POST['BookList']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['BookList'])) {
     header('Location: ../src/config/View/Book_list.php');
     exit();
 }
-
-if (isset($_POST['borrow_book']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['borrow_book'])) {
     header('Location: ../src/config/View/Borrow_form.php');
     exit();
 }
-
-if (isset($_POST['report_view']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['report_view'])) {
     header('Location: ../src/config/View/Report_view.php');
     exit();
 }
 
-if (isset($_POST['addbook']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['addbook'])) {
     try {
         $book = new Book(
             trim($_POST['book_title'] ?? ''),
@@ -44,15 +41,12 @@ if (isset($_POST['addbook']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result > 0) {
             $_SESSION['message'] = 'Book added successfully!';
             $_SESSION['messageType'] = 'success';
-        } else {
-            $_SESSION['message'] = 'Failed to add book';
-            $_SESSION['messageType'] = 'error';
         }
     } catch (ValidationException $e) {
         $_SESSION['message'] = $e->getMessage();
         $_SESSION['messageType'] = 'error';
     } catch (\Exception $e) {
-        $_SESSION['message'] = 'An error occurred while adding the book';
+        $_SESSION['message'] = 'An error occurred';
         $_SESSION['messageType'] = 'error';
     }
 
@@ -65,3 +59,43 @@ if (isset($_SESSION['message'])) {
     $messageType = $_SESSION['messageType'];
     unset($_SESSION['message'], $_SESSION['messageType']);
 }
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library System</title>
+    <!-- Keep your original styles or use simple one -->
+    <style>
+        body { font-family: Arial; text-align: center; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>2026 Library System</h1>
+
+    <?php if ($message): ?>
+        <p class="<?= $messageType ?>"><?= htmlspecialchars($message) ?></p>
+    <?php endif; ?>
+
+    <!-- Your add book form here (keep your original form if you prefer) -->
+    <form method="POST">
+        <h3>Add Book</h3>
+        Title: <input type="text" name="book_title" required><br><br>
+        Author: <input type="text" name="book_author" required><br><br>
+        Genre: <input type="text" name="book_genre" required><br><br>
+        Year: <input type="number" name="book_year" required><br><br>
+        <button type="submit" name="addbook">Add Book</button>
+    </form>
+
+    <br>
+    <form method="POST">
+        <button type="submit" name="BookList">View Book List</button>
+        <button type="submit" name="borrow_book">Borrow Book</button>
+        <button type="submit" name="report_view">Library Report</button>
+    </form>
+</body>
+</html>

@@ -26,7 +26,7 @@ class BookRepository
     {
         $sql = "INSERT INTO books(title, author, year, genre) 
                 VALUES(:title, :author, :year, :genre)";
-
+        
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([
             'title'  => $book->getTitle(),
