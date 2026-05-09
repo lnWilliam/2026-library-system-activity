@@ -9,7 +9,7 @@ use App\Exception\ValidationException;
 /**
  * Book Entity
  *
- * @author William Joseph Imperial
+ * @author William Joseph
  * @since 2026-05-09
  */
 class Book
