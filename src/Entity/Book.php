@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Entity;
@@ -15,10 +16,10 @@ class Book
     private string $genre;
 
     public function __construct(
-        string $title, 
-        string $author, 
-        int $year, 
-        string $genre, 
+        string $title,
+        string $author,
+        int $year,
+        string $genre,
         ?int $bookId = null
     ) {
         if ($year < 1000 || $year > (int)date('Y')) {
@@ -32,9 +33,24 @@ class Book
         $this->bookId = $bookId;
     }
 
-    public function getBookId(): ?int { return $this->bookId; }
-    public function getTitle(): string { return $this->title; }
-    public function getAuthor(): string { return $this->author; }
-    public function getYear(): int { return $this->year; }
-    public function getGenre(): string { return $this->genre; }
+    public function getBookId(): ?int
+    {
+        return $this->bookId;
+    }
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+    public function getAuthor(): string
+    {
+        return $this->author;
+    }
+    public function getYear(): int
+    {
+        return $this->year;
+    }
+    public function getGenre(): string
+    {
+        return $this->genre;
+    }
 }

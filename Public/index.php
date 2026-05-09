@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -63,17 +64,30 @@ if (isset($_SESSION['message'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library System</title>
-    <!-- Keep your original styles or use simple one -->
+
     <style>
-        body { font-family: Arial; text-align: center; }
-        .success { color: green; font-weight: bold; }
-        .error { color: red; font-weight: bold; }
+        body {
+            font-family: Arial;
+            text-align: center;
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
+
 <body>
     <h1>2026 Library System</h1>
 
@@ -81,7 +95,7 @@ if (isset($_SESSION['message'])) {
         <p class="<?= $messageType ?>"><?= htmlspecialchars($message) ?></p>
     <?php endif; ?>
 
-    <!-- Your add book form here (keep your original form if you prefer) -->
+
     <form method="POST">
         <h3>Add Book</h3>
         Title: <input type="text" name="book_title" required><br><br>
@@ -98,4 +112,5 @@ if (isset($_SESSION['message'])) {
         <button type="submit" name="report_view">Library Report</button>
     </form>
 </body>
+
 </html>

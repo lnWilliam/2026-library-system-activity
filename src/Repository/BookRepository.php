@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository;
@@ -7,12 +8,7 @@ use App\Config\DatabaseConfig;
 use App\Entity\Book;
 use PDO;
 
-/**
- * Book Repository
- *
- * @author Your Name
- * @since 2026-05-09
- */
+
 class BookRepository
 {
     private PDO $connection;
@@ -26,7 +22,7 @@ class BookRepository
     {
         $sql = "INSERT INTO books(title, author, year, genre) 
                 VALUES(:title, :author, :year, :genre)";
-        
+
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([
             'title'  => $book->getTitle(),

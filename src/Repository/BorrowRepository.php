@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Repository;
@@ -7,12 +8,7 @@ use App\Config\DatabaseConfig;
 use App\Config\LibraryConfig;
 use PDO;
 
-/**
- * Borrow Repository
- *
- * @author Your Name
- * @since 2026-05-09
- */
+
 class BorrowRepository
 {
     private PDO $connection;
@@ -29,7 +25,7 @@ class BorrowRepository
         $sql = "INSERT INTO borrow_records 
                 (student_id, book_id, borrow_date, due_date, status) 
                 VALUES (:student_id, :book_id, :borrow_date, :due_date, :status)";
-        
+
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([
             'student_id'  => $studentId,

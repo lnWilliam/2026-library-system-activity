@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Service;
@@ -34,7 +35,7 @@ class LibraryService
                     JOIN books b ON br.book_id = b.book_id 
                     JOIN student s ON br.student_id = s.student_id 
                     WHERE br.due_date < CURDATE() AND br.status = 'borrowed'";
-            
+
             $stmt = $this->connection->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
