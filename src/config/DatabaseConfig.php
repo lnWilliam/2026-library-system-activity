@@ -1,6 +1,15 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * DatabaseConfig
+ * 
+ * Manages PDO database connection with secure settings.
+ * Uses singleton-like pattern through constructor.
+ *
+ * @author Your Full Name
+ * @since 2026-05-09
+ */
 
 namespace App\Config;
 

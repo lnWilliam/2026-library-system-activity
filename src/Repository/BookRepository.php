@@ -1,6 +1,15 @@
 <?php
 
 declare(strict_types=1);
+/**
+ * BookRepository
+ * 
+ * Handles all database operations for books (CRUD).
+ * Uses prepared statements to prevent SQL injection.
+ *
+ * @author Your Full Name
+ * @since 2026-05-09
+ */
 
 namespace App\Repository;
 
